@@ -25,8 +25,8 @@ Create a custom-command.json file in your project directory with your custom Git
 
 Execute your custom Git commands by running:
 
-```json
-git <command-name> -m "your commit message"
+```bash
+git <command-name> -m "Your commit message"
 ```
 
 Replace with the name of the custom command you defined in your .customcommand file.
