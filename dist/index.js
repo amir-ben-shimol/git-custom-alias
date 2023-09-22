@@ -32,7 +32,7 @@ class GitCustomCommand {
     }
     loadCustomConfig() {
         try {
-            const configFile = fs.readFileSync(".custom-command.json", "utf-8");
+            const configFile = fs.readFileSync(".custom-alias.json", "utf-8");
             return JSON.parse(configFile);
         }
         catch (error) {
@@ -45,7 +45,7 @@ class GitCustomCommand {
             .map(([alias, commands]) => `git config alias.${alias} "!git ${commands.join(" && !git ")}"`)
             .join("\n");
         fs.writeFileSync("set-git-aliases.sh", aliasScript);
-        console.log("Generated alias setup script (set-git-aliases.sh)");
+        console.log("Generated alias setup script (set-git-aliases.sh )");
     }
 }
 exports.GitCustomCommand = GitCustomCommand;
