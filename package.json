@@ -9,8 +9,9 @@
 		"README.md"
 	],
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "tsc"
+		"build": "tsc",
+		"start": "node dist/index.js",
+		"updateAliases": "sh ./scripts/set-git-aliases.sh"
 	},
 	"keywords": [],
 	"author": "",
@@ -20,6 +21,7 @@
 		"typescript": "^5.2.2"
 	},
 	"dependencies": {
-		"child_process": "^1.0.2"
+		"child_process": "^1.0.2",
+		"promisify-child-process": "^4.1.2"
 	}
 }
