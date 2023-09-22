@@ -12,7 +12,7 @@ export class GitCustomCommand {
 
 	private loadCustomConfig(): GitCommands {
 		try {
-			const configFile = fs.readFileSync(".custom-command.json", "utf-8");
+			const configFile = fs.readFileSync(".custom-alias.json", "utf-8");
 			return JSON.parse(configFile);
 		} catch (error: any) {
 			console.error(`Error loading custom config: ${error.message}`);
