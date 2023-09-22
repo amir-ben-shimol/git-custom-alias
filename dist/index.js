@@ -24,17 +24,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GitCustomCommand = void 0;
-// src/index.ts
 const fs = __importStar(require("fs"));
-const path = __importStar(require("path"));
 class GitCustomCommand {
     constructor() {
         this.config = this.loadCustomConfig();
-        this.createGitAliases();
+        this.generateAliasScript();
     }
     loadCustomConfig() {
         try {
-            const configFile = fs.readFileSync('.custom-command.json', 'utf-8');
+            const configFile = fs.readFileSync(".custom-command.json", "utf-8");
             return JSON.parse(configFile);
         }
         catch (error) {
@@ -42,15 +40,13 @@ class GitCustomCommand {
             return {};
         }
     }
-    createGitAliases() {
-        const gitConfigPath = path.join('.git', 'config');
-        const gitAliases = [];
-        for (const alias in this.config) {
-            const commands = this.config[alias];
-            const aliasScript = `!sh -c "git ${commands.join(' && ')}"`;
-            gitAliases.push(`[alias]\n  ${alias} = ${aliasScript}`);
-        }
-        fs.writeFileSync(gitConfigPath, gitAliases.join('\n\n'), { flag: 'a' });
+    generateAliasScript() {
+        const aliasScript = Object.entries(this.config)
+            .map(([alias, commands]) => `git config alias.${alias} "!git ${commands.join(" && !git ")}"`)
+            .join("\n");
+        fs.writeFileSync("set-git-aliases.sh", aliasScript);
+        console.log("Generated alias setup script (set-git-aliases.sh)");
     }
 }
 exports.GitCustomCommand = GitCustomCommand;
+new GitCustomCommand();
