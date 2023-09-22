@@ -42,7 +42,7 @@ class GitCustomCommand {
     }
     generateAliasScript() {
         const aliasScript = Object.entries(this.config)
-            .map(([alias, commands]) => `git config alias.${alias} "!git ${commands.join(" && !git ")}"`)
+            .map(([alias, commands]) => `git config alias.${alias} "!git ${commands.join(" && git ")}"`)
             .join("\n");
         fs.writeFileSync("set-git-aliases.sh", aliasScript);
         console.log("Generated alias setup script (set-git-aliases.sh )");
