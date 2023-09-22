@@ -26,7 +26,7 @@ export class GitCustomCommand {
 			.join("\n");
 
 		fs.writeFileSync("set-git-aliases.sh", aliasScript);
-		console.log("Generated alias setup script (set-git-aliases.sh)");
+		console.log("Generated alias setup script (set-git-aliases.sh )");
 	}
 }
 
