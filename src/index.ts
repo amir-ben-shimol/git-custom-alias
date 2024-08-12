@@ -1,33 +1,32 @@
 import * as fs from "fs";
+import * as path from "path";
+import { loadConfig } from "./config";
+import { generateGitAliasCommands } from "./gitAliasGenerator";
+import { execSync } from "child_process";
 
-type GitCommands = Record<string, string[]>;
-
-export class GitCustomCommand {
-	private config: GitCommands;
-
-	constructor() {
-		this.config = this.loadCustomConfig();
-		this.generateAliasScript();
-	}
-
-	private loadCustomConfig(): GitCommands {
-		try {
-			const configFile = fs.readFileSync(".custom-alias.json", "utf-8");
-			return JSON.parse(configFile);
-		} catch (error: any) {
-			console.error(`Error loading custom config: ${error.message}`);
-			return {};
-		}
-	}
-
-	private generateAliasScript() {
-		const aliasScript = Object.entries(this.config)
-			.map(([alias, commands]) => `git config alias.${alias} "!git ${commands.join(" && git ")}"`)
-			.join("\n");
-
-		fs.writeFileSync("set-git-aliases.sh", aliasScript);
-		console.log("Generated alias setup script (set-git-aliases.sh )");
-	}
+function updateGitConfig(tempConfigContent: string): void {
+  const tempConfigPath = path.resolve(process.cwd(), ".gitconfig_temp");
+  fs.writeFileSync(tempConfigPath, tempConfigContent);
+  try {
+    execSync(`git config --global --remove-section alias`, { stdio: "ignore" });
+  } catch (error) {
+    // Alias section might not exist, ignore this error
+  }
+  execSync(`git config --global --add include.path ${tempConfigPath}`);
+  fs.unlinkSync(tempConfigPath);
 }
 
-new GitCustomCommand();
+function main() {
+  try {
+    const config = loadConfig();
+
+    const gitAliasContent = generateGitAliasCommands(config);
+    console.log(gitAliasContent);
+    updateGitConfig(gitAliasContent);
+    console.log("Git aliases have been successfully created/updated.");
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+main();

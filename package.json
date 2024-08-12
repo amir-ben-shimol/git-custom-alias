@@ -1,28 +1,30 @@
 {
-	"name": "git-custom-alias",
-	"version": "1.0.11",
-	"description": "",
-	"main": "dist/index.js",
-	"types": "dist/index.d.ts",
-	"files": [
-		"dist",
-		"README.md"
-	],
-	"scripts": {
-		"build": "tsc",
-		"start": "node dist/index.js",
-		"preinstall": "sh ./scripts/set-git-aliases.sh"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"devDependencies": {
-		"@types/node": "^20.6.2",
-		"typescript": "^5.2.2"
-	},
-	"dependencies": {
-		"child_process": "^1.0.2",
-		"promisify-child-process": "^4.1.2",
-		"readline": "^1.3.0"
-	}
+  "name": "git-custom-alias",
+  "version": "1.0.11",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "create-git-alias": "ts-node src/index.ts",
+    "preinstall": "sh ./scripts/set-git-aliases.sh"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.14.15",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "promisify-child-process": "^4.1.2",
+    "readline": "^1.3.0",
+    "ts-node": "^10.9.2"
+  }
 }

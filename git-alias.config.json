@@ -1,0 +1,4 @@
+{
+  "update": ["fetch", "pull"],
+  "custom-add": ["add .", "commit -m 'fixed project issues'", "push"]
+}
