@@ -19,13 +19,13 @@ function updateGitConfig(tempConfigContent: string): void {
 function main() {
   try {
     const config = loadConfig();
-
     const gitAliasContent = generateGitAliasCommands(config);
-    console.log(gitAliasContent);
     updateGitConfig(gitAliasContent);
     console.log("Git aliases have been successfully created/updated.");
   } catch (error) {
-    console.error("Error:", error);
+    console.error("An error occurred:", error);
+    // Log full error stack if necessary
+    console.error(error);
   }
 }
 
